@@ -1,0 +1,10 @@
+.headtext{
+	text-align: center;
+}
+
+.card{
+	z-index: 1;
+}
+.card-text{
+	text-align: center!important;
+}
