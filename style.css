@@ -8,19 +8,75 @@
 .card-text{
 	text-align: center!important;
 }
-#terug{
-	margin: 25px;
-	height: 100px;
-	width: 200px;
-}
+
 h1{
 	top: 0;
 	margin-top: -100px;
 }
 #pizzas{
-	margin-top: 20px;
+	margin: 0 auto;
+	margin-top: 50px;
 	text-align: center;
+
 }
-.pizzaimg{
-	max-height:150px;
+
+.col-sm-2{
+	float: left;
 }
+
+.card2{
+    background-color: turquoise;
+    border: 10px solid rgba(0,0,0,.125);
+}
+.card3{
+    background-color: #ffc107;
+    border: 10px solid rgba(0,0,0,.125);
+}
+.nav-link{
+	font-size: 50px;
+	margin-right: 200px;
+}
+ul{
+	margin:0 auto;
+}
+.active{
+	text-decoration: underline!important;
+	text-decoration-color: green!important;
+}
+.card-text{
+	font-size: 30px;
+}
+.price {
+    font-size: 35px;
+    color: red;
+    font-weight: 700;
+    margin-top: -30px;
+    text-align: center;
+}
+   
+}
+.navbar{
+	background-color: #d4d7de!important;
+}
+#toppingshead {
+	text-align:center;
+	font-size: 50px;
+}
+.addbutton {
+background-color:  #25AB1F;
+color: white;
+margin: 0 auto;
+margin-top: -30px;
+}
+.card-body {
+	text-align: right;
+
+}
+
+#priceall {
+font-size:50px;
+}
+
+
+
+
