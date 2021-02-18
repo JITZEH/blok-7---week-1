@@ -25,7 +25,7 @@ function pizzascards(i) {
 
 for (var i = pizzas.length - 1; i >= 0; i--) {
  	pizzascards(i);
- 		console.log(pizzas[i]);
+ 		// console.log(pizzas[i]);
 }
 // toppings
 toppings = [
@@ -54,15 +54,14 @@ function toppingscards(t) {
 
 for (var t = toppings.length - 1; t >= 0; t--) {
  	toppingscards(t);
- 		console.log(toppings[t]);
+ 		// console.log(toppings[t]);
 }
 
 // shoppingcart
 
 function addToCart(prices) {
 	cart+=prices 	
-console.log(cart);
-document.getElementById("priceall").innerHTML = '€'+cart.toFixed(2) ;
+// console.log(cart);
+document.getElementById("priceall").innerHTML = '€'+cart.toFixed(2)+'<img src="img/shopping-cart.png">' ;
 }
-
 
