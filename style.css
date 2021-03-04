@@ -36,10 +36,13 @@ font-size:50px;
     background-color: salmon;
     border: 10px solid rgba(0,0,0,.125);
 }
+.cardblue{
+    background-color: turquoise;
+    border: 10px solid rgba(0,0,0,.125);	
+}
 .cardyellow{
     background-color: #ffc107;
-    border: 10px solid rgba(0,0,0,.125);
-	
+    border: 10px solid rgba(0,0,0,.125);	
 }
 /* custom color card */
 /* card rows */
@@ -53,8 +56,9 @@ font-size:50px;
 	margin: 0 auto;
 	margin-top: 30px;
 	text-align: center;
-
+	
 }
+
 /* card rows */
 .rows{
 	position: absolute;
@@ -79,6 +83,16 @@ font-size:50px;
 /* all */
 .hidden{
 	display: none!important;
+}
+#nextpage {
+    top: 725px;
+    margin: auto 24.5em;
+    position: absolute;
+    height: 75px;
+    width: 200px;
+    background-color: #25AB1F;
+    color: white;
+    font-size: 35px;
 }
 /* all */
 
@@ -111,6 +125,16 @@ position: fixed;
 #totalword {
 	margin-left: 25rem!important;
 
+}
+#openSC{
+top: 725px;
+margin: auto 39em;
+position: absolute;
+height: 75px;
+width: 200px;
+background-color: #25AB1F;
+color: white;
+font-size: 22px;
 }
 /* shoppingcart */
 
