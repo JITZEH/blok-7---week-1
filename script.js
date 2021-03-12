@@ -5,18 +5,16 @@ const pizzas = [
 	{name: 'Quattro Formaggi', price:850, img: 'quattro-formaggi.png', description: 'gorgonzola, mozzarella, pecorino en taleggio. In Nederland wordt de pecorino en taleggio vaak vervangen door Parmezaanse kaas en gewone Hollandse (Goudse) kaas'},
 	{name: 'Vegetariana', price:1140, img: 'vegetariana.png', description: 'tomaat, mozzarella, paprika en (gegrilde) courgette en aubergine. Soms ook broccoli of spinazie'},
 	{name: 'Quattro Stagioni', price:1100, img: 'quattro-stagioni.png', description: 'tomaat, mozzarella, ham, champignons, olijven, artisjokken (soms doperwten in plaats van artisjok)'},
-	{name: 'pannekoek', price:750, img: 'pannekoek.png', description: 'pannekoek zonder iets er op. helemaal kaal.'},
-	"salmon"
+	{name: 'pannekoek', price:750, img: 'pannekoek.png', description: 'pannekoek zonder iets er op. helemaal kaal.'}
 ];
 
 const sizes = [
-{name:'small', factor:0.6, img:'small.png'},
+{name:'small', factor:0.6, img:'small.png', },
 {name:'kinder', factor:0.8, img:'kinder.png'},
 {name:'normal', factor:1, img:'normal.png'},
 {name:'medium', factor:1.2, img:'medium.png'},
 {name:'large', factor:1.4, img:'large.png'},
-{name:'kingsize', factor:2, img:'kingsize.png'},
-"blue"
+{name:'kingsize', factor:2, img:'kingsize.png'}
 ]
 
 const toppings = [
@@ -25,8 +23,7 @@ const toppings = [
 	{name: 'ananas', price:125, img: 'ananas.png'},
 	{name: 'ham', price:60, img: 'ham.png'},
 	{name: 'kaas', price:25, img: 'kaas.png'},
-	{name: 'none', price:0, img: 'none.png'},
-	"yellow"
+	{name: 'none', price:0, img: 'none.png'}
 	]	
 let cardsPizzas = document.getElementById("pizzas");
 let cardsSizes = document.getElementById("sizes");
@@ -53,48 +50,50 @@ var buttonIndex = 0;
 var buttonDiv = document.getElementsByClassName("addbutton")[buttonIndex];
 var arrayGend;
 var colorOfCard;
+const arrayGenerator = [
+	{array:pizzas, color:'cardsalmon'},
+	{array:sizes, color:'cardblue'},
+	{array:toppings, color:'cardyellow'}];
 
-const arrayGen = [pizzas, sizes, toppings];
+ var currentArrayIndex = 0;
+SwitchPage();
 
-nextPage.addEventListener('click', genArray);
-function genArray(arrayGenarated) {
-    var currentArray = -1;
-    currentArray+=1;    
-    var arrayGenarated = arrayGen[currentArray];  
-    let colorCard = arrayGenarated.length-1;
-    colorOfCard = arrayGenarated[colorCard]; 
-    arrayGend = arrayGenarated;
-    foreachFun(arrayGenarated);
+
+nextPage.addEventListener('click', SwitchPage);
+function SwitchPage() {
+    colorOfCard = arrayGenerator[currentArrayIndex].color;
+    arrayGenerator[currentArrayIndex].array.forEach(object => {
+		CreateCards(object)
+	});
+	
+	console.log(currentArrayIndex-2);
+	if (currentArrayIndex < 0) {
+		var testg = document.getElementsByClassName("'"+arrayGenerator[currentArrayIndex-1].color+"'") 
+		testg.classList.add('hidden');
+	}
+	currentArrayIndex++;
+	
 }
 
-function foreachFun(arrayGenarated) {
-    for (let index = 0; index < (arrayGenarated.length-1); index++) {
-        const object = arrayGenarated[index];
-        Cards(object)   
-console.log(object);
-    }
-} 
-
-
-function Cards(object) {
-    cardDiv.classList.add("'card"+colorOfCard+"'");
+function CreateCards(object) {
+	console.log(object);
+    cardDiv.classList.add(colorOfCard);
     textDiv.innerHTML = object.name;
-	priceDiv.innerHTML= priceCalc(object.price);
+	priceDiv.innerHTML= PriceCalc(object.price);
 	imgDiv.src = 'img/'+object.img;
 	let newTemplate = templateDiv.cloneNode(true);
 	newTemplate.classList.remove("hidden");
 	cardsPizzas.appendChild(newTemplate);
-	addButton(object); 
-console.log('kleur van de kaart = '+colorOfCard);
+	AddButton(object); 
+	console.log('kleur van de kaart = '+colorOfCard);
 }
 
-function addButton(object) {
+function AddButton(object) {
 	buttonDiv.addEventListener('click', function(){
 	}) ;
 	buttonIndex+=1;
 }
-function priceCalc(price) {
+function PriceCalc(price) {
     return "€" + (price/100).toFixed(2);
     }
-
 
