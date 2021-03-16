@@ -116,11 +116,12 @@ section#shoppingcart{
 	
 	border: 5px rgb(108, 92, 92) solid;
 }
-#exit{
+#exitSC{
 top: 5px;
 right: 5px;
 height: 40px;
 position: fixed;
+cursor: pointer;
 }
 #totalword {
 	margin-left: 25rem!important;

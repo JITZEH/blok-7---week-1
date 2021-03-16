@@ -9,12 +9,12 @@ const pizzas = [
 ];
 
 const sizes = [
-{name:'small', factor:0.6, img:'small.png', },
-{name:'kinder', factor:0.8, img:'kinder.png'},
-{name:'normal', factor:1, img:'normal.png'},
-{name:'medium', factor:1.2, img:'medium.png'},
-{name:'large', factor:1.4, img:'large.png'},
-{name:'kingsize', factor:2, img:'kingsize.png'}
+	{name:'small', factor:0.6, img:'small.png', },
+	{name:'kinder', factor:0.8, img:'kinder.png'},
+	{name:'normal', factor:1, img:'normal.png'},
+	{name:'medium', factor:1.2, img:'medium.png'},
+	{name:'large', factor:1.4, img:'large.png'},
+	{name:'kingsize', factor:2, img:'kingsize.png'}
 ]
 
 const toppings = [
@@ -25,35 +25,35 @@ const toppings = [
 	{name: 'kaas', price:25, img: 'kaas.png'},
 	{name: 'none', price:0, img: 'none.png'}
 	]	
-let cardsPizzas = document.getElementById("pizzas");
-let cardsSizes = document.getElementById("sizes");
-let cardsToppings = document.getElementById("toppings");
-let templateDiv = document.getElementById("template");
-let imgDiv = document.getElementsByClassName("card-img-top")[0];
-let textDiv = document.getElementsByClassName("card-text")[0];
-let priceDiv = document.getElementsByClassName("price")[0];
-let cardDiv = document.getElementsByClassName("card")[0];
-let shopImg = document.getElementById("shopimg");
-let shopName = document.getElementById("shopname");
-let shopMuch = document.getElementById("shopmuch");
-let	shopPrice = document.getElementById("shopprice");
-let shoppingCart = document.getElementById("shoppingcart");
-let checkBox = document.getElementById("checkbox");
-let totalPrice = document.getElementById("totalprice");
-let nextPage = document.getElementById("nextpage");
-let openSC = document.getElementById("openSC");
-let openSC1 = document.getElementById("openSC1");
-let sizeSC = document.getElementById("sizeSC");
-let templateSC = document.getElementById("templateSC"); 
-let exitButton = document.getElementById("exit");
+const cardsPizzas = document.getElementById("pizzas");
+const cardsSizes = document.getElementById("sizes");
+const cardsToppings = document.getElementById("toppings");
+const templateDiv = document.getElementById("template");
+const imgDiv = document.getElementsByClassName("card-img-top")[0];
+const textDiv = document.getElementsByClassName("card-text")[0];
+const priceDiv = document.getElementsByClassName("price")[0];
+const cardDiv = document.getElementsByClassName("card")[0];
+const shopImg = document.getElementById("shopimg");
+const shopName = document.getElementById("shopname");
+const shopMuch = document.getElementById("shopmuch");
+const	shopPrice = document.getElementById("shopprice");
+const shoppingCart = document.getElementById("shoppingcart");
+const checkBox = document.getElementById("checkbox");
+const totalPrice = document.getElementById("totalprice");
+const nextPage = document.getElementById("nextpage");
+const openSC = document.getElementById("openSC");
+const openSC1 = document.getElementById("openSC1");
+const sizeSC = document.getElementById("sizeSC");
+const templateSC = document.getElementById("templateSC"); 
+const exitSC = document.getElementById("exitSC");
 var buttonIndex = 0;
 var buttonDiv = document.getElementsByClassName("addbutton")[buttonIndex];
 var arrayGend;
 var colorOfCard;
 const arrayGenerator = [
-	{array:pizzas, color:'cardsalmon'},
-	{array:sizes, color:'cardblue'},
-	{array:toppings, color:'cardyellow'}];
+	{group:"Pizzas", array:pizzas, color:'cardsalmon'},
+	{group:"Sizes", array:sizes, color:'cardblue'},
+	{group:"Toppings", array:toppings, color:'cardyellow'}];
 
  var currentArrayIndex = 0;
 SwitchPage();
@@ -66,13 +66,26 @@ function SwitchPage() {
 		CreateCards(object)
 	});
 	
-	console.log(currentArrayIndex-2);
-	if (currentArrayIndex < 0) {
+
+	if (0 < currentArrayIndex ) {
 		var testg = document.getElementsByClassName("'"+arrayGenerator[currentArrayIndex-1].color+"'") 
+		console.log('test:'+testg);
 		testg.classList.add('hidden');
 	}
 	currentArrayIndex++;
-	
+	if (colorOfCard == 'cardyellow') {
+		openSC.classList.remove("hidden");
+		openSC.addEventListener('click', OpenSC);
+		
+	}
+}
+function OpenSC() {
+	shoppingCart.classList.remove("hidden");
+}
+
+exitSC.addEventListener('click', ExitSC);
+function ExitSC() {
+	shoppingCart.classList.add("hidden");
 }
 
 function CreateCards(object) {
@@ -81,9 +94,10 @@ function CreateCards(object) {
     textDiv.innerHTML = object.name;
 	priceDiv.innerHTML= PriceCalc(object.price);
 	imgDiv.src = 'img/'+object.img;
-	let newTemplate = templateDiv.cloneNode(true);
+	const newTemplate = templateDiv.cloneNode(true);
 	newTemplate.classList.remove("hidden");
-	cardsPizzas.appendChild(newTemplate);
+	var testy = "cards"+"'"+arrayGenerator[currentArrayIndex].group+"'";
+	testy.appendChild(newTemplate);
 	AddButton(object); 
 	console.log('kleur van de kaart = '+colorOfCard);
 }
