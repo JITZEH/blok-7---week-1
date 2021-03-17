@@ -51,9 +51,9 @@ var buttonDiv = document.getElementsByClassName("addbutton")[buttonIndex];
 var arrayGend;
 var colorOfCard;
 const arrayGenerator = [
-	{group:"Pizzas", array:pizzas, color:'cardsalmon'},
-	{group:"Sizes", array:sizes, color:'cardblue'},
-	{group:"Toppings", array:toppings, color:'cardyellow'}];
+	{group:cardsPizzas, array:pizzas, color:'cardsalmon'},
+	{group:cardsSizes, array:sizes, color:'cardblue'},
+	{group:cardsToppings, array:toppings, color:'cardyellow'}];
 
  var currentArrayIndex = 0;
 SwitchPage();
@@ -65,20 +65,18 @@ function SwitchPage() {
     arrayGenerator[currentArrayIndex].array.forEach(object => {
 		CreateCards(object)
 	});
-	
-
 	if (0 < currentArrayIndex ) {
-		var testg = document.getElementsByClassName("'"+arrayGenerator[currentArrayIndex-1].color+"'") 
-		console.log('test:'+testg);
-		testg.classList.add('hidden');
+		arrayGenerator[currentArrayIndex].group.classList.remove('hidden');
+		arrayGenerator[currentArrayIndex-1].group.classList.add('hidden');
 	}
 	currentArrayIndex++;
-	if (colorOfCard == 'cardyellow') {
+	if (arrayGenerator.length == currentArrayIndex) {
 		openSC.classList.remove("hidden");
 		openSC.addEventListener('click', OpenSC);
 		
 	}
 }
+
 function OpenSC() {
 	shoppingCart.classList.remove("hidden");
 }
@@ -96,7 +94,8 @@ function CreateCards(object) {
 	imgDiv.src = 'img/'+object.img;
 	const newTemplate = templateDiv.cloneNode(true);
 	newTemplate.classList.remove("hidden");
-	var testy = "cards"+"'"+arrayGenerator[currentArrayIndex].group+"'";
+	var testy = arrayGenerator[currentArrayIndex].group;
+	console.log("cards"+arrayGenerator[currentArrayIndex].group);
 	testy.appendChild(newTemplate);
 	AddButton(object); 
 	console.log('kleur van de kaart = '+colorOfCard);
