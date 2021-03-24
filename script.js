@@ -36,19 +36,19 @@ const cardDiv = document.getElementsByClassName("card")[0];
 const shopImg = document.getElementById("shopimg");
 const shopName = document.getElementById("shopname");
 const shopMuch = document.getElementById("shopmuch");
-const	shopPrice = document.getElementById("shopprice");
+const shopPrice = document.getElementById("shopprice");
 const shoppingCart = document.getElementById("shoppingcart");
 const checkBox = document.getElementById("checkbox");
 const totalPrice = document.getElementById("totalprice");
-const nextPage = document.getElementById("nextpage");
+const nextPageButton = document.getElementById("nextpage");
 const openSC = document.getElementById("openSC");
-const openSC1 = document.getElementById("openSC1");
+const openSCimg = document.getElementById("openSCimg");
 const sizeSC = document.getElementById("sizeSC");
 const templateSC = document.getElementById("templateSC"); 
 const exitSC = document.getElementById("exitSC");
+const newPizzaButton = document.getElementById("newPizza");
 var buttonIndex = 0;
 var buttonDiv = document.getElementsByClassName("addbutton")[buttonIndex];
-var arrayGend;
 var colorOfCard;
 const arrayGenerator = [
 	{group:cardsPizzas, array:pizzas, color:'cardsalmon'},
@@ -56,14 +56,14 @@ const arrayGenerator = [
 	{group:cardsToppings, array:toppings, color:'cardyellow'}];
 
  var currentArrayIndex = 0;
-SwitchPage();
 
 
-nextPage.addEventListener('click', SwitchPage);
-function SwitchPage() {
+showCardGroup();
+nextPageButton.addEventListener('click', showCardGroup);
+function showCardGroup() {
     colorOfCard = arrayGenerator[currentArrayIndex].color;
     arrayGenerator[currentArrayIndex].array.forEach(object => {
-		CreateCards(object)
+		createCards(object)
 	});
 	if (0 < currentArrayIndex ) {
 		arrayGenerator[currentArrayIndex].group.classList.remove('hidden');
@@ -72,41 +72,66 @@ function SwitchPage() {
 	currentArrayIndex++;
 	if (arrayGenerator.length == currentArrayIndex) {
 		openSC.classList.remove("hidden");
-		openSC.addEventListener('click', OpenSC);
+		nextPageButton.classList.add("hidden");
+		openSC.addEventListener('click', showShoppingCart);
 		
 	}
 }
-
-function OpenSC() {
+openSCimg.addEventListener('click', showShoppingCart);
+function showShoppingCart() {
 	shoppingCart.classList.remove("hidden");
 }
 
-exitSC.addEventListener('click', ExitSC);
-function ExitSC() {
+exitSC.addEventListener('click', hideShoppingCart);
+function hideShoppingCart() {
 	shoppingCart.classList.add("hidden");
 }
 
-function CreateCards(object) {
+function createCards(object) {
 	console.log(object);
     cardDiv.classList.add(colorOfCard);
     textDiv.innerHTML = object.name;
-	priceDiv.innerHTML= PriceCalc(object.price);
+	priceDiv.innerHTML = priceCalc(object.price);
 	imgDiv.src = 'img/'+object.img;
 	const newTemplate = templateDiv.cloneNode(true);
 	newTemplate.classList.remove("hidden");
-	var testy = arrayGenerator[currentArrayIndex].group;
+	var cardGroup = arrayGenerator[currentArrayIndex].group;
 	console.log("cards"+arrayGenerator[currentArrayIndex].group);
-	testy.appendChild(newTemplate);
-	AddButton(object); 
+	cardGroup.appendChild(newTemplate);
+	addtoCartButton(object); 
 	console.log('kleur van de kaart = '+colorOfCard);
 }
 
-function AddButton(object) {
+function addtoCartButton(object) {
 	buttonDiv.addEventListener('click', function(){
 	}) ;
 	buttonIndex+=1;
+	cart.push(object);
+	addItemToCart(object);
 }
-function PriceCalc(price) {
+function addItemToCart(object) {
+	shopImg.src = 'img/'+object.img;
+	shopName.innerHTML = object.name ;
+	shopMuch.innerHTML = 'hoeveel';
+	shopPrice.innerHTML= '€'+priceCalc(object.price);
+	sizeSC.innerHTML = 'pizza.size';
+	let newTemplateSC = document.getElementById('templateSC').cloneNode(true);
+	document.getElementById('templateSC').classList.add("hidden");
+	document.getElementById('SCelements').appendChild(newTemplateSC);
+}
+
+
+function priceCalc(price) {
     return "€" + (price/100).toFixed(2);
     }
 
+	newPizzaButton.addEventListener('click', createANewPizza);
+function createANewPizza() {
+	console.log('1:'+currentArrayIndex);
+	arrayGenerator[currentArrayIndex-1].group.classList.add('hidden');
+	console.log('1:'+currentArrayIndex);
+	currentArrayIndex = 0;
+	console.log('0:'+currentArrayIndex);
+	arrayGenerator[currentArrayIndex].group.classList.remove('hidden');
+
+}
