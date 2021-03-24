@@ -57,20 +57,25 @@ const arrayGenerator = [
 
  var currentArrayIndex = 0;
 
+for (let pos = 0; pos < arrayGenerator.length; pos++) {
+	colorOfCard = arrayGenerator[pos].color;
+    arrayGenerator[pos].array.forEach(object => {
+		createCards(object, pos)
+
+	});
+	
+}
+
 
 showCardGroup();
 nextPageButton.addEventListener('click', showCardGroup);
 function showCardGroup() {
-    colorOfCard = arrayGenerator[currentArrayIndex].color;
-    arrayGenerator[currentArrayIndex].array.forEach(object => {
-		createCards(object)
-	});
-	if (0 < currentArrayIndex ) {
+	if (currentArrayIndex > 0 ) {
 		arrayGenerator[currentArrayIndex].group.classList.remove('hidden');
 		arrayGenerator[currentArrayIndex-1].group.classList.add('hidden');
 	}
 	currentArrayIndex++;
-	if (arrayGenerator.length == currentArrayIndex) {
+	if (currentArrayIndex == arrayGenerator.length) {
 		openSC.classList.remove("hidden");
 		nextPageButton.classList.add("hidden");
 		openSC.addEventListener('click', showShoppingCart);
@@ -87,19 +92,16 @@ function hideShoppingCart() {
 	shoppingCart.classList.add("hidden");
 }
 
-function createCards(object) {
-	console.log(object);
+function createCards(object, pos) {
     cardDiv.classList.add(colorOfCard);
     textDiv.innerHTML = object.name;
 	priceDiv.innerHTML = priceCalc(object.price);
 	imgDiv.src = 'img/'+object.img;
 	const newTemplate = templateDiv.cloneNode(true);
 	newTemplate.classList.remove("hidden");
-	var cardGroup = arrayGenerator[currentArrayIndex].group;
-	console.log("cards"+arrayGenerator[currentArrayIndex].group);
+	var cardGroup = arrayGenerator[pos].group;
 	cardGroup.appendChild(newTemplate);
 	addtoCartButton(object); 
-	console.log('kleur van de kaart = '+colorOfCard);
 }
 
 function addtoCartButton(object) {
@@ -127,11 +129,12 @@ function priceCalc(price) {
 
 	newPizzaButton.addEventListener('click', createANewPizza);
 function createANewPizza() {
-	console.log('1:'+currentArrayIndex);
 	arrayGenerator[currentArrayIndex-1].group.classList.add('hidden');
-	console.log('1:'+currentArrayIndex);
 	currentArrayIndex = 0;
-	console.log('0:'+currentArrayIndex);
 	arrayGenerator[currentArrayIndex].group.classList.remove('hidden');
-
+	currentArrayIndex = 1;
+	openSC.classList.add("hidden");
+	nextPageButton.classList.remove("hidden");
+	openSC.addEventListener('click', showShoppingCart);
+		
 }
