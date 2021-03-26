@@ -1,20 +1,20 @@
 var cart = [];
 const pizzas = [
-	{name: 'Margherita', price:850, img: 'margherita.png', description: 'tomaat, mozzarella, basilicum'},
-	{name: 'Marinara', price:750, img: 'marinara.png', description: 'tomaat, knoflook, olie en oregano (pas als de pizza uit de oven komt)'},
-	{name: 'Quattro Formaggi', price:850, img: 'quattro-formaggi.png', description: 'gorgonzola, mozzarella, pecorino en taleggio. In Nederland wordt de pecorino en taleggio vaak vervangen door Parmezaanse kaas en gewone Hollandse (Goudse) kaas'},
-	{name: 'Vegetariana', price:1140, img: 'vegetariana.png', description: 'tomaat, mozzarella, paprika en (gegrilde) courgette en aubergine. Soms ook broccoli of spinazie'},
-	{name: 'Quattro Stagioni', price:1100, img: 'quattro-stagioni.png', description: 'tomaat, mozzarella, ham, champignons, olijven, artisjokken (soms doperwten in plaats van artisjok)'},
-	{name: 'pannekoek', price:750, img: 'pannekoek.png', description: 'pannekoek zonder iets er op. helemaal kaal.'}
+	{name: 'Margherita', price:850, img: 'margherita.png'},
+	{name: 'Marinara', price:750, img: 'marinara.png'},
+	{name: 'Quattro Formaggi', price:850, img: 'quattro-formaggi.png'},
+	{name: 'Vegetariana', price:1140, img: 'vegetariana.png'},
+	{name: 'Quattro Stagioni', price:1100, img: 'quattro-stagioni.png'},
+	{name: 'pannekoek', price:750, img: 'pannekoek.png'}
 ];
 
 const sizes = [
-	{name:'small', factor:0.6, img:'small.png', },
-	{name:'kinder', factor:0.8, img:'kinder.png'},
-	{name:'normal', factor:1, img:'normal.png'},
-	{name:'medium', factor:1.2, img:'medium.png'},
-	{name:'large', factor:1.4, img:'large.png'},
-	{name:'kingsize', factor:2, img:'kingsize.png'}
+	{size:'small', factor:0.6, img:'small.png', },
+	{size:'kinder', factor:0.8, img:'kinder.png'},
+	{size:'normal', factor:1, img:'normal.png'},
+	{size:'medium', factor:1.2, img:'medium.png'},
+	{size:'large', factor:1.4, img:'large.png'},
+	{size:'kingsize', factor:2, img:'kingsize.png'}
 ]
 
 const toppings = [
@@ -42,13 +42,13 @@ const checkBox = document.getElementById("checkbox");
 const totalPrice = document.getElementById("totalprice");
 const nextPageButton = document.getElementById("nextpage");
 const openSC = document.getElementById("openSC");
-const openSCimg = document.getElementById("openSCimg");
+const openSCimg = document.getElementById("openSCimg");                               
 const sizeSC = document.getElementById("sizeSC");
+const toppingSC = document.getElementById("toppingSC");
 const templateSC = document.getElementById("templateSC"); 
 const exitSC = document.getElementById("exitSC");
 const newPizzaButton = document.getElementById("newPizza");
-var buttonIndex = 0;
-var buttonDiv = document.getElementsByClassName("addbutton")[buttonIndex];
+
 var colorOfCard;
 const arrayGenerator = [
 	{group:cardsPizzas, array:pizzas, color:'cardsalmon'},
@@ -61,9 +61,7 @@ for (let pos = 0; pos < arrayGenerator.length; pos++) {
 	colorOfCard = arrayGenerator[pos].color;
     arrayGenerator[pos].array.forEach(object => {
 		createCards(object, pos)
-
-	});
-	
+	});	
 }
 
 
@@ -97,21 +95,33 @@ function createCards(object, pos) {
     textDiv.innerHTML = object.name;
 	priceDiv.innerHTML = priceCalc(object.price);
 	imgDiv.src = 'img/'+object.img;
+	
 	const newTemplate = templateDiv.cloneNode(true);
 	newTemplate.classList.remove("hidden");
+	
 	var cardGroup = arrayGenerator[pos].group;
 	cardGroup.appendChild(newTemplate);
-	addtoCartButton(object); 
+	
+	let addButton = newTemplate.getElementsByClassName('addButton')[0];
+	addButton.addEventListener('click', addtoCartButton);
+	if (object.name == undefined) {
+		addButton.dataset.pizzaSize = object.size;
+		addButton.dataset.pizzaFactor = object.factor;
+	}
+	else{
+		addButton.dataset.pizzaName = object.name;
+		addButton.dataset.pizzaPrice = priceCalc(object.price);
+		addButton.dataset.pizzaImg = object.img;}
+}
+function addtoCartButton() {
+	console.log(this);
+	// cart.push(object);
+	// console.log("object"+object.name);
+	// addItemToCart(object);
 }
 
-function addtoCartButton(object) {
-	buttonDiv.addEventListener('click', function(){
-	}) ;
-	buttonIndex+=1;
-	cart.push(object);
-	addItemToCart(object);
-}
 function addItemToCart(object) {
+	console.log(object+'567');
 	shopImg.src = 'img/'+object.img;
 	shopName.innerHTML = object.name ;
 	shopMuch.innerHTML = 'hoeveel';
