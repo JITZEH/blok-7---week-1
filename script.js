@@ -18,12 +18,12 @@ const sizes = [
 ]
 
 const toppings = [
-	{name: 'salami', price:50, img: 'salami.png'},
-	{name: 'champignons', price:100, img: 'champignons.png'},
-	{name: 'ananas', price:125, img: 'ananas.png'},
-	{name: 'ham', price:60, img: 'ham.png'},
-	{name: 'kaas', price:25, img: 'kaas.png'},
-	{name: 'none', price:0, img: 'none.png'}
+	{topping: 'salami', price:50, img: 'salami.png'},
+	{topping: 'champignons', price:100, img: 'champignons.png'},
+	{topping: 'ananas', price:125, img: 'ananas.png'},
+	{topping: 'ham', price:60, img: 'ham.png'},
+	{topping: 'kaas', price:25, img: 'kaas.png'},
+	{topping: 'none', price:0, img: 'none.png'}
 	]	
 const cardsPizzas = document.getElementById("pizzas");
 const cardsSizes = document.getElementById("sizes");
@@ -92,7 +92,7 @@ function hideShoppingCart() {
 
 function createCards(object, pos) {
     cardDiv.classList.add(colorOfCard);
-    textDiv.innerHTML = object.name;
+    textDiv.innerHTML = object.name || object.size || object.topping;
 	priceDiv.innerHTML = priceCalc(object.price);
 	imgDiv.src = 'img/'+object.img;
 	
@@ -107,21 +107,21 @@ function createCards(object, pos) {
 	if (object.name == undefined) {
 		addButton.dataset.pizzaSize = object.size;
 		addButton.dataset.pizzaFactor = object.factor;
+		addButton.dataset.pizzaTopping = object.topping;	
 	}
 	else{
 		addButton.dataset.pizzaName = object.name;
 		addButton.dataset.pizzaPrice = priceCalc(object.price);
-		addButton.dataset.pizzaImg = object.img;}
+		addButton.dataset.pizzaImg = object.img;
+	}
 }
 function addtoCartButton() {
-	console.log(this);
-	// cart.push(object);
-	// console.log("object"+object.name);
-	// addItemToCart(object);
+	 console.log(
+		 {name:this.dataset.pizzaName, img:this.dataset.pizzaImg, price:this.dataset.pizzaPrice, factor:this.dataset.pizzaFactor, size:this.dataset.pizzaSize, topping:this.dataset.pizzaTopping}
+	 )
 }
 
 function addItemToCart(object) {
-	console.log(object+'567');
 	shopImg.src = 'img/'+object.img;
 	shopName.innerHTML = object.name ;
 	shopMuch.innerHTML = 'hoeveel';
