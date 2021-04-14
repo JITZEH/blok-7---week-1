@@ -18,12 +18,12 @@ const sizes = [
 ]
 
 const toppings = [
-	{topping: 'salami', price:50, img: 'salami.png'},
-	{topping: 'champignons', price:100, img: 'champignons.png'},
-	{topping: 'ananas', price:125, img: 'ananas.png'},
-	{topping: 'ham', price:60, img: 'ham.png'},
-	{topping: 'kaas', price:25, img: 'kaas.png'},
-	{topping: 'none', price:0, img: 'none.png'}
+	{topping: 'salami', toppingprice:50, img: 'salami.png'},
+	{topping: 'champignons', toppingprice:100, img: 'champignons.png'},
+	{topping: 'ananas', toppingprice:125, img: 'ananas.png'},
+	{topping: 'ham', toppingprice:60, img: 'ham.png'},
+	{topping: 'kaas', toppingprice:25, img: 'kaas.png'},
+	{topping: 'none', toppingprice:0, img: 'none.png'}
 	]	
 const cardsPizzas = document.getElementById("pizzas");
 const cardsSizes = document.getElementById("sizes");
@@ -35,7 +35,7 @@ const priceDiv = document.getElementsByClassName("price")[0];
 const cardDiv = document.getElementsByClassName("card")[0];
 const shopImg = document.getElementById("shopimg");
 const shopName = document.getElementById("shopname");
-const shopMuch = document.getElementById("shopmuch");
+const shopTopping = document.getElementById("shoptopping");
 const shopPrice = document.getElementById("shopprice");
 const shoppingCart = document.getElementById("shoppingcart");
 const checkBox = document.getElementById("checkbox");
@@ -93,7 +93,7 @@ function hideShoppingCart() {
 function createCards(object, pos) {
     cardDiv.classList.add(colorOfCard);
     textDiv.innerHTML = object.name || object.size || object.topping;
-	priceDiv.innerHTML = priceCalc(object.price);
+	priceDiv.innerHTML = priceCalc(object.price || object.toppingprice);
 	imgDiv.src = 'img/'+object.img;
 	
 	const newTemplate = templateDiv.cloneNode(true);
@@ -107,26 +107,28 @@ function createCards(object, pos) {
 	if (object.name == undefined) {
 		addButton.dataset.pizzaSize = object.size;
 		addButton.dataset.pizzaFactor = object.factor;
-		addButton.dataset.pizzaTopping = object.topping;	
+		addButton.dataset.pizzaTopping = object.topping;
+		addButton.dataset.toppingprice = object.toppingprice;
 	}
 	else{
 		addButton.dataset.pizzaName = object.name;
-		addButton.dataset.pizzaPrice = priceCalc(object.price);
+		addButton.dataset.pizzaPrice = object.price;
 		addButton.dataset.pizzaImg = object.img;
 	}
 }
 function addtoCartButton() {
-	 console.log(
+	// if(cart.name!==undefined && cart.img!==undefined && cart.price!==undefined && cart.factor!==undefined && cart.size!==undefined &&cart.topping!==undefined)
+	 cart.push(
 		 {name:this.dataset.pizzaName, img:this.dataset.pizzaImg, price:this.dataset.pizzaPrice, factor:this.dataset.pizzaFactor, size:this.dataset.pizzaSize, topping:this.dataset.pizzaTopping}
 	 )
 }
 
-function addItemToCart(object) {
-	shopImg.src = 'img/'+object.img;
-	shopName.innerHTML = object.name ;
-	shopMuch.innerHTML = 'hoeveel';
-	shopPrice.innerHTML= '€'+priceCalc(object.price);
-	sizeSC.innerHTML = 'pizza.size';
+function addItemToCart() {
+	shopImg.src = 'img/'+cart.img;
+	shopName.innerHTML = cart.name ;
+	shopTopping.innerHTML = 1;
+	shopPrice.innerHTML= cart.price;
+	sizeSC.innerHTML = cart.size;
 	let newTemplateSC = document.getElementById('templateSC').cloneNode(true);
 	document.getElementById('templateSC').classList.add("hidden");
 	document.getElementById('SCelements').appendChild(newTemplateSC);
