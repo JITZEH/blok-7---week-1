@@ -116,11 +116,24 @@ function createCards(object, pos) {
 		addButton.dataset.pizzaImg = object.img;
 	}
 }
+
 function addtoCartButton() {
+	// console.log(cart);
 	// if(cart.name!==undefined && cart.img!==undefined && cart.price!==undefined && cart.factor!==undefined && cart.size!==undefined &&cart.topping!==undefined)
-	 cart.push(
+	if(cart[0] == undefined){
+	console.log(
 		 {name:this.dataset.pizzaName, img:this.dataset.pizzaImg, price:this.dataset.pizzaPrice, factor:this.dataset.pizzaFactor, size:this.dataset.pizzaSize, topping:this.dataset.pizzaTopping}
 	 )
+	}
+	else {
+		cart[0].name =  this.dataset.pizzaName;
+		cart[0].img  =  this.dataset.pizzaImg;
+		cart[0].price = this.dataset.pizzaPrice;
+		cart[0].factor = this.dataset.pizzaFactor;
+		cart[0].size = this.dataset.pizzaSize;
+		cart[0].topping = this.dataset.pizzaTopping;
+	}
+	//  console.log(cart);
 }
 
 function addItemToCart() {
