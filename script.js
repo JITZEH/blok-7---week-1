@@ -1,30 +1,103 @@
-var cart = [];
-const pizzas = [
-	{name: 'Margherita', price:850, img: 'margherita.png'},
-	{name: 'Marinara', price:750, img: 'marinara.png'},
-	{name: 'Quattro Formaggi', price:850, img: 'quattro-formaggi.png'},
-	{name: 'Vegetariana', price:1140, img: 'vegetariana.png'},
-	{name: 'Quattro Stagioni', price:1100, img: 'quattro-stagioni.png'},
-	{name: 'pannekoek', price:750, img: 'pannekoek.png'}
+var cart = {
+    pizzaprice: 0,
+    factor: 0,
+    toppingprice: 0
+};
+const pizzas = [{
+        name: 'Margherita',
+        price: 850,
+        img: 'margherita.png'
+    },
+    {
+        name: 'Marinara',
+        price: 750,
+        img: 'marinara.png'
+    },
+    {
+        name: 'Quattro Formaggi',
+        price: 850,
+        img: 'quattro-formaggi.png'
+    },
+    {
+        name: 'Vegetariana',
+        price: 1140,
+        img: 'vegetariana.png'
+    },
+    {
+        name: 'Quattro Stagioni',
+        price: 1100,
+        img: 'quattro-stagioni.png'
+    },
+    {
+        name: 'pannekoek',
+        price: 750,
+        img: 'pannekoek.png'
+    }
 ];
 
-const sizes = [
-	{size:'small', factor:0.6, img:'small.png', },
-	{size:'kinder', factor:0.8, img:'kinder.png'},
-	{size:'normal', factor:1, img:'normal.png'},
-	{size:'medium', factor:1.2, img:'medium.png'},
-	{size:'large', factor:1.4, img:'large.png'},
-	{size:'kingsize', factor:2, img:'kingsize.png'}
+const sizes = [{
+        size: 'small',
+        factor: 0.6,
+        img: 'small.png',
+    },
+    {
+        size: 'kinder',
+        factor: 0.8,
+        img: 'kinder.png'
+    },
+    {
+        size: 'normal',
+        factor: 1,
+        img: 'normal.png'
+    },
+    {
+        size: 'medium',
+        factor: 1.2,
+        img: 'medium.png'
+    },
+    {
+        size: 'large',
+        factor: 1.4,
+        img: 'large.png'
+    },
+    {
+        size: 'kingsize',
+        factor: 2,
+        img: 'kingsize.png'
+    }
 ]
 
-const toppings = [
-	{topping: 'salami', toppingprice:50, img: 'salami.png'},
-	{topping: 'champignons', toppingprice:100, img: 'champignons.png'},
-	{topping: 'ananas', toppingprice:125, img: 'ananas.png'},
-	{topping: 'ham', toppingprice:60, img: 'ham.png'},
-	{topping: 'kaas', toppingprice:25, img: 'kaas.png'},
-	{topping: 'none', toppingprice:0, img: 'none.png'}
-	]	
+const toppings = [{
+        topping: 'salami',
+        toppingprice: 50,
+        img: 'salami.png'
+    },
+    {
+        topping: 'champignons',
+        toppingprice: 100,
+        img: 'champignons.png'
+    },
+    {
+        topping: 'ananas',
+        toppingprice: 125,
+        img: 'ananas.png'
+    },
+    {
+        topping: 'ham',
+        toppingprice: 60,
+        img: 'ham.png'
+    },
+    {
+        topping: 'kaas',
+        toppingprice: 25,
+        img: 'kaas.png'
+    },
+    {
+        topping: 'none',
+        toppingprice: 0,
+        img: 'none.png'
+    }
+]
 const cardsPizzas = document.getElementById("pizzas");
 const cardsSizes = document.getElementById("sizes");
 const cardsToppings = document.getElementById("toppings");
@@ -42,124 +115,127 @@ const checkBox = document.getElementById("checkbox");
 const totalPrice = document.getElementById("totalprice");
 const nextPageButton = document.getElementById("nextpage");
 const openSC = document.getElementById("openSC");
-const openSCimg = document.getElementById("openSCimg");                               
+const openSCimg = document.getElementById("openSCimg");
 const sizeSC = document.getElementById("sizeSC");
 const toppingSC = document.getElementById("toppingSC");
-const templateSC = document.getElementById("templateSC"); 
+const templateSC = document.getElementById("templateSC");
 const exitSC = document.getElementById("exitSC");
 const newPizzaButton = document.getElementById("newPizza");
 
 var colorOfCard;
-const arrayGenerator = [
-	{group:cardsPizzas, array:pizzas, color:'cardsalmon'},
-	{group:cardsSizes, array:sizes, color:'cardblue'},
-	{group:cardsToppings, array:toppings, color:'cardyellow'}];
+const arrayGenerator = [{
+        group: cardsPizzas,
+        array: pizzas,
+        color: 'cardsalmon'
+    },
+    {
+        group: cardsSizes,
+        array: sizes,
+        color: 'cardblue'
+    },
+    {
+        group: cardsToppings,
+        array: toppings,
+        color: 'cardyellow'
+    }
+];
 
- var currentArrayIndex = 0;
+var currentArrayIndex = 0;
 
 for (let pos = 0; pos < arrayGenerator.length; pos++) {
-	colorOfCard = arrayGenerator[pos].color;
+    colorOfCard = arrayGenerator[pos].color;
     arrayGenerator[pos].array.forEach(object => {
-		createCards(object, pos)
-	});	
+        createCards(object, pos)
+    });
 }
 
 
 showCardGroup();
 nextPageButton.addEventListener('click', showCardGroup);
+
 function showCardGroup() {
-	if (currentArrayIndex > 0 ) {
-		arrayGenerator[currentArrayIndex].group.classList.remove('hidden');
-		arrayGenerator[currentArrayIndex-1].group.classList.add('hidden');
-	}
-	currentArrayIndex++;
-	if (currentArrayIndex == arrayGenerator.length) {
-		openSC.classList.remove("hidden");
-		nextPageButton.classList.add("hidden");
-		openSC.addEventListener('click', showShoppingCart);
-		
-	}
+    if (currentArrayIndex > 0) {
+        arrayGenerator[currentArrayIndex].group.classList.remove('hidden');
+        arrayGenerator[currentArrayIndex - 1].group.classList.add('hidden');
+    }
+    currentArrayIndex++;
+    if (currentArrayIndex == arrayGenerator.length) {
+        openSC.classList.remove("hidden");
+        nextPageButton.classList.add("hidden");
+        openSC.addEventListener('click', showShoppingCart);
+
+    }
 }
 openSCimg.addEventListener('click', showShoppingCart);
+
 function showShoppingCart() {
-	shoppingCart.classList.remove("hidden");
+    shoppingCart.classList.remove("hidden");
 }
 
 exitSC.addEventListener('click', hideShoppingCart);
+
 function hideShoppingCart() {
-	shoppingCart.classList.add("hidden");
+    shoppingCart.classList.add("hidden");
 }
 
 function createCards(object, pos) {
     cardDiv.classList.add(colorOfCard);
     textDiv.innerHTML = object.name || object.size || object.topping;
-	priceDiv.innerHTML = priceCalc(object.price || object.toppingprice);
-	imgDiv.src = 'img/'+object.img;
-	
-	const newTemplate = templateDiv.cloneNode(true);
-	newTemplate.classList.remove("hidden");
-	
-	var cardGroup = arrayGenerator[pos].group;
-	cardGroup.appendChild(newTemplate);
-	
-	let addButton = newTemplate.getElementsByClassName('addButton')[0];
-	addButton.addEventListener('click', addtoCartButton);
-	if (object.name == undefined) {
-		addButton.dataset.pizzaSize = object.size;
-		addButton.dataset.pizzaFactor = object.factor;
-		addButton.dataset.pizzaTopping = object.topping;
-		addButton.dataset.toppingprice = object.toppingprice;
-	}
-	else{
-		addButton.dataset.pizzaName = object.name;
-		addButton.dataset.pizzaPrice = object.price;
-		addButton.dataset.pizzaImg = object.img;
-	}
+    priceDiv.innerHTML = priceCalc(object.price || object.toppingprice);
+    imgDiv.src = 'img/' + object.img;
+
+    const newTemplate = templateDiv.cloneNode(true);
+    newTemplate.classList.remove("hidden");
+
+    var cardGroup = arrayGenerator[pos].group;
+    cardGroup.appendChild(newTemplate);
+
+    let addButton = newTemplate.getElementsByClassName('addButton')[0];
+    addButton.addEventListener('click', addtoCartButton);
+    console.log(object.size != undefined);
+    if (object.name != undefined) {
+        addButton.dataset.pizzaPrice = object.price;
+    } else if (object.size != undefined) {
+        addButton.dataset.pizzaFactor = object.factor;
+    } else if (object.topping != undefined) {
+        addButton.dataset.toppingPrice = object.toppingprice;
+    }
 }
 
 function addtoCartButton() {
-	// console.log(cart);
-	// if(cart.name!==undefined && cart.img!==undefined && cart.price!==undefined && cart.factor!==undefined && cart.size!==undefined &&cart.topping!==undefined)
-	if(cart[0] == undefined){
-	console.log(
-		 {name:this.dataset.pizzaName, img:this.dataset.pizzaImg, price:this.dataset.pizzaPrice, factor:this.dataset.pizzaFactor, size:this.dataset.pizzaSize, topping:this.dataset.pizzaTopping}
-	 )
-	}
-	else {
-		cart[0].name =  this.dataset.pizzaName;
-		cart[0].img  =  this.dataset.pizzaImg;
-		cart[0].price = this.dataset.pizzaPrice;
-		cart[0].factor = this.dataset.pizzaFactor;
-		cart[0].size = this.dataset.pizzaSize;
-		cart[0].topping = this.dataset.pizzaTopping;
-	}
-	//  console.log(cart);
+    if (this.dataset.pizzaPrice != undefined) {
+        cart.pizzaprice = this.dataset.pizzaPrice;
+    } else if (this.dataset.pizzaFactor != undefined) {
+        cart.factor = this.dataset.pizzaFactor;
+    } else if (this.dataset.toppingPrice != undefined) {
+        cart.toppingprice = this.dataset.toppingPrice;
+    }
+
+    console.log(cart);
 }
 
 function addItemToCart() {
-	shopImg.src = 'img/'+cart.img;
-	shopName.innerHTML = cart.name ;
-	shopTopping.innerHTML = 1;
-	shopPrice.innerHTML= cart.price;
-	sizeSC.innerHTML = cart.size;
-	let newTemplateSC = document.getElementById('templateSC').cloneNode(true);
-	document.getElementById('templateSC').classList.add("hidden");
-	document.getElementById('SCelements').appendChild(newTemplateSC);
+    shopPrice.innerHTML = priceCalc(cart.price*cart.factor);
+    sizeSC.innerHTML = cart.size;
+    let newTemplateSC = document.getElementById('templateSC').cloneNode(true);
+    document.getElementById('templateSC').classList.add("hidden");
+    document.getElementById('SCelements').appendChild(newTemplateSC);
 }
 
 
 function priceCalc(price) {
-    return "€" + (price/100).toFixed(2);
-    }
+    return "€" + (price / 100).toFixed(2);
+}
 
-	newPizzaButton.addEventListener('click', createANewPizza);
+newPizzaButton.addEventListener('click', createANewPizza);
+
 function createANewPizza() {
-	arrayGenerator[currentArrayIndex-1].group.classList.add('hidden');
-	currentArrayIndex = 0;
-	arrayGenerator[currentArrayIndex].group.classList.remove('hidden');
-	currentArrayIndex = 1;
-	openSC.classList.add("hidden");
-	nextPageButton.classList.remove("hidden");
-	openSC.addEventListener('click', showShoppingCart);
-		
+    arrayGenerator[currentArrayIndex - 1].group.classList.add('hidden');
+    currentArrayIndex = 0;
+    arrayGenerator[currentArrayIndex].group.classList.remove('hidden');
+    currentArrayIndex = 1;
+    openSC.classList.add("hidden");
+    nextPageButton.classList.remove("hidden");
+    openSC.addEventListener('click', showShoppingCart);
+
 }
