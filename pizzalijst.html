@@ -112,8 +112,18 @@
                     </div>
                 </div>
                 <!-- total -->
-                <input type="checkbox" id="checkbox"> I pay with my card en get €2,- off!</input>
-                
+                <label for="cars">in hoeveel stukken moet de pizza?</label>
+                  <select name="cars" id="cars">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="4">4</option>
+                    <option value="6">6</option>
+                    <option value="8">8</option>
+                  </select>
+                 <br>
+                <input type="checkbox" id="thuisbezorgd" onclick="thuisbezorgdFunc();">moet het thuisbezorgd worden voor €2,-</input>
+                 <br>
+                <input type="checkbox" id="betaalmetpin" onclick="betaalMetPinFunc();"> Ik betaal met pin en krijg €2,- korting</input>
                 <!-- proceed to pay  -->
                 <div class="d-flex flex-row align-items-center mt-3 p-2 bg-white rounded"><button class="btn btn-warning btn-block btn-lg ml-2 pay-button" type="button">Proceed to Pay</button></div>
                 <!-- proceed to pay  -->
@@ -151,6 +161,5 @@
     <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js'></script>
     <!--  custom script   -->
     <script type="text/javascript" src="script.js"></script>
-    <script type="text/javascript" src="data.js"></script>
   </body>
 </html>

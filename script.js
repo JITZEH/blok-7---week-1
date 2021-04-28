@@ -111,7 +111,8 @@ const shopName = document.getElementById("shopname");
 const shopTopping = document.getElementById("shoptopping");
 const shopPrice = document.getElementById("shopprice");
 const shoppingCart = document.getElementById("shoppingcart");
-const checkBox = document.getElementById("checkbox");
+const betaalMetPin = document.getElementById("betaalmetpin");
+const thuisBezorgd = document.getElementById("thuisbezorgd");
 const totalPrice = document.getElementById("totalprice");
 const nextPageButton = document.getElementById("nextpage");
 const openSC = document.getElementById("openSC");
@@ -121,7 +122,8 @@ const toppingSC = document.getElementById("toppingSC");
 const templateSC = document.getElementById("templateSC");
 const exitSC = document.getElementById("exitSC");
 const newPizzaButton = document.getElementById("newPizza");
-
+var brutoPrice;
+var totalPriceCalc;
 var colorOfCard;
 const arrayGenerator = [{
         group: cardsPizzas,
@@ -170,6 +172,9 @@ openSCimg.addEventListener('click', showShoppingCart);
 
 function showShoppingCart() {
     shoppingCart.classList.remove("hidden");
+    addItemToCart();
+    totalPriceCalc = parseInt(brutoPrice);
+    totalPrice.innerHTML =  priceCalc(totalPriceCalc);
 }
 
 exitSC.addEventListener('click', hideShoppingCart);
@@ -192,13 +197,12 @@ function createCards(object, pos) {
 
     let addButton = newTemplate.getElementsByClassName('addButton')[0];
     addButton.addEventListener('click', addtoCartButton);
-    console.log(object.size != undefined);
     if (object.name != undefined) {
-        addButton.dataset.pizzaPrice = object.price;
+        addButton.dataset.pizzaPrice = parseInt(object.price);
     } else if (object.size != undefined) {
-        addButton.dataset.pizzaFactor = object.factor;
+        addButton.dataset.pizzaFactor = parseInt(object.factor);
     } else if (object.topping != undefined) {
-        addButton.dataset.toppingPrice = object.toppingprice;
+        addButton.dataset.toppingPrice = parseInt(object.toppingprice);
     }
 }
 
@@ -210,18 +214,37 @@ function addtoCartButton() {
     } else if (this.dataset.toppingPrice != undefined) {
         cart.toppingprice = this.dataset.toppingPrice;
     }
-
-    console.log(cart);
 }
 
 function addItemToCart() {
-    shopPrice.innerHTML = priceCalc(cart.price*cart.factor);
-    sizeSC.innerHTML = cart.size;
+    
+    brutoPrice = (parseInt(cart.pizzaprice)*parseInt(cart.factor)) + parseInt(cart.toppingprice) ;
+    shopPrice.innerHTML = priceCalc(brutoPrice);
+    
     let newTemplateSC = document.getElementById('templateSC').cloneNode(true);
     document.getElementById('templateSC').classList.add("hidden");
     document.getElementById('SCelements').appendChild(newTemplateSC);
 }
 
+function betaalMetPinFunc (){
+    if (betaalMetPin.checked == true){
+        totalPriceCalc = parseInt(brutoPrice) - 200;
+        totalPrice.innerHTML =  priceCalc(totalPriceCalc);
+    } else {
+        totalPriceCalc = parseInt(brutoPrice);
+        totalPrice.innerHTML =  priceCalc(totalPriceCalc);
+    }
+    
+}
+function thuisbezorgdFunc() {
+    if (thuisBezorgd.checked == true){
+        totalPriceCalc = parseInt(brutoPrice) + 200;
+        totalPrice.innerHTML =  priceCalc(totalPriceCalc);
+    } else {
+        totalPriceCalc = parseInt(brutoPrice);
+        totalPrice.innerHTML =  priceCalc(totalPriceCalc);
+    }
+}
 
 function priceCalc(price) {
     return "€" + (price / 100).toFixed(2);
