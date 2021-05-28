@@ -182,11 +182,19 @@ exitSC.addEventListener('click', hideShoppingCart);
 function hideShoppingCart() {
     shoppingCart.classList.add("hidden");
 }
-
+/**
+ * create cardelelements in hte HTML with product information
+ *
+ * @param {object} object - name, price/factor, image/size
+ * @param {number} pos - index in arrayGenerator
+*/
 function createCards(object, pos) {
     cardDiv.classList.add(colorOfCard);
     textDiv.innerHTML = object.name || object.size || object.topping;
     priceDiv.innerHTML = priceCalc(object.price || object.toppingprice);
+    if (object.factor != undefined){
+        priceDiv.innerHTML = "pizza x"+object.factor;
+    }
     imgDiv.src = 'img/' + object.img;
 
     const newTemplate = templateDiv.cloneNode(true);
@@ -245,7 +253,15 @@ function thuisbezorgdFunc() {
         totalPrice.innerHTML =  priceCalc(totalPriceCalc);
     }
 }
+/**
+ * 
+ * creates a beautiful price with € and rounds it off
+ * @param {number} price - number
+ * @return {string} €+price rounds it off
+ *
+ */
 
+ 
 function priceCalc(price) {
     return "€" + (price / 100).toFixed(2);
 }
